@@ -2,6 +2,9 @@
 
 import telebot
 import time
+import urllib
+import json
+import requests
 
 API_TOKEN = '242035355:AAGgFud76CXCIuwRUn1WJl6XjjWnQVRsKYE'
 bot = telebot.TeleBot(API_TOKEN)
@@ -14,6 +17,27 @@ while True:
         def send_welcome(message):
             bot.reply_to(message, 'Welcome!!')
 
+        # EJEMPLO DE GET_VOTE
+        @bot.message_handler(commands=['getVotes'])
+        def get_votes(message):
+            url = 'http://188.213.161.241/API/get_votes.php?votation_id=8'
+            result = requests.get(url)
+            bot.reply_to(message, result)
+
+        # EJEMPLO DE GET_VOTE
+        @bot.message_handler(commands=['voteSi'])
+        def send_vote(message):
+            url = 'http://188.213.161.241/API/vote.php'
+            payload = {'votationName': 'testBot', 'vote': 'SI', 'zipcode': '28033'}
+            result = requests.post(url, payload)
+            bot.reply_to(message, result)
+
+        @bot.message_handler(commands=['voteNo'])
+        def send_vote(message):
+            url = 'http://188.213.161.241/API/vote.php'
+            payload = {'votationName': 'testBot', 'vote': 'NO', 'zipcode': '28033'}
+            result = requests.post(url, payload)
+            bot.reply_to(message, result)
 
         bot.polling(none_stop=True)
     except Exception as e:
