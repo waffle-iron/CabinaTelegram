@@ -16,16 +16,16 @@ while True:
             bot.reply_to(message, 'Welcome!!')
 
 
-        # EJEMPLO DE GET_VOTE
-        @bot.message_handler(commands=['getVotes'])
+        # EJEMPLO DE GET_VOTES
+        @bot.message_handler(commands=['getvotes'])
         def get_votes(message):
             url = 'http://188.213.161.241/API/get_votes.php?votation_id=8'
             result = requests.get(url)
             bot.reply_to(message, result)
 
 
-        # EJEMPLO DE GET_VOTE
-        @bot.message_handler(commands=['voteSi'])
+        # EJEMPLO DE SEND_VOTE
+        @bot.message_handler(commands=['votesi'])
         def send_vote(message):
             url = 'http://188.213.161.241/API/vote.php'
             payload = {'votationName': 'testBot', 'vote': 'SI', 'zipcode': '28033'}
@@ -33,7 +33,7 @@ while True:
             bot.reply_to(message, result)
 
 
-        @bot.message_handler(commands=['voteNo'])
+        @bot.message_handler(commands=['voteno'])
         def send_vote(message):
             url = 'http://188.213.161.241/API/vote.php'
             payload = {'votationName': 'testBot', 'vote': 'NO', 'zipcode': '28033'}
