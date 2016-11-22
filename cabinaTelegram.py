@@ -3,9 +3,13 @@
 import telebot
 import time
 import requests
+import configparser
 
-API_TOKEN = '219345528:AAEI9PX3pYLoOAtIrgGGyJQF9Fu9PjvHmDc'
-bot = telebot.TeleBot(API_TOKEN)
+config = configparser.ConfigParser()
+config.read('config.ini')
+token_id = config['Telegram']['token_id']
+
+bot = telebot.TeleBot(token_id)
 
 while True:
     try:
