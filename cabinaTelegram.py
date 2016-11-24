@@ -1,15 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-import telebot
 import time
 import requests
-import configparser
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-token_id = config['Telegram']['token_id']
+from votacion import Votacion
+import variables
 
-bot = telebot.TeleBot(token_id)
+bot = variables.bot
+
+votacion = Votacion()
 
 while True:
     try:
@@ -41,6 +40,11 @@ while True:
             payload = {'votationName': 'testBot', 'vote': 'NO', 'zipcode': '28033'}
             result = requests.post(url, payload)
             bot.reply_to(message, result)
+
+
+        @bot.message_handler(commands=['votacion'])
+        def crear_votacion(message):
+            votacion.nombrar_votacion(message)
 
 
         bot.polling(none_stop=True)
