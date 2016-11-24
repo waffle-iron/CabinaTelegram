@@ -6,9 +6,9 @@ import sys
 
 
 
-#Ruta donde se creará la base de datos. En sistemas UNIX-like será /home/username/encuestas.db
+#Ruta donde se creará la base de datos. En sistemas UNIX-like será /home/username/votacion.db
 home = os.path.expanduser('~')
-path = home + '/encuestas.db'
+path = home + '/votacion.db'
 
 #Crea una conexión con la base de datos establecida en la ruta. Si no existe la base de datos, se creará una nueva
 con = lite.connect(path)
