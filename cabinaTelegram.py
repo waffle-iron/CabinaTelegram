@@ -1,15 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-import telebot
 import time
 import requests
-import configparser
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-token_id = config['Telegram']['token_id']
+import variables
 
-bot = telebot.TeleBot(token_id)
+bot = variables.bot
+
 
 while True:
     try:
