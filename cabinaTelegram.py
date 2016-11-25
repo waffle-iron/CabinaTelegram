@@ -8,8 +8,6 @@ import variables
 
 bot = variables.bot
 
-votacion = Votacion()
-
 while True:
     try:
         @bot.message_handler(commands=['help', 'start'])
@@ -44,7 +42,8 @@ while True:
 
         @bot.message_handler(commands=['votacion'])
         def crear_votacion(message):
-            votacion.nombrar_votacion(message)
+            votacion_creator = Votacion()
+            votacion_creator.crear_votacion(message)
 
 
         bot.polling(none_stop=True)
