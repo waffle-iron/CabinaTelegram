@@ -13,7 +13,7 @@ class Votacion:
     def crear_encuesta(self, message):
         if message.text == '/cancel':
             return False
-        nombreEncuesta = message
+        nombreEncuesta = message.text
         # Crear encuesta en BD
         msg = bot.send_message(message.chat.id, 'Introduzca el numero de opciones (escriba /cancel para cancelar)')
         bot.register_next_step_handler(msg, self.crear_preguntas)
