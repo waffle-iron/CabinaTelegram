@@ -44,7 +44,7 @@ class Votacion:
             command = telebot.util.extract_command(pregunta)
             if command == 'done' and self.get_num_preguntas() >= 1:
                 bot.send_message(chat_id, '✅ Encuesta creada con éxito')
-                bot.send_message(chat_id, str(self.preguntas_respuestas))
+                bot.send_message(chat_id, str(self.to_string()), parse_mode='Markdown')
             elif command == 'done':
                 bot.send_message(chat_id, 'Necesitas al menos una pregunta para crear la votación.')
                 self.pide_pregunta(chat_id)
@@ -99,3 +99,12 @@ class Votacion:
     def get_num_respuestas(self):
         pregunta = sorted(self.preguntas_respuestas)[-1]
         return len(self.preguntas_respuestas[pregunta])
+
+    def to_string(self):
+        text = '*%s*\n\n' % self.titulo
+        for pregunta in sorted(self.preguntas_respuestas):
+            text += '%s\n' % pregunta
+            for respuesta in self.preguntas_respuestas[pregunta]:
+                text += '    ▫️ %s\n' % respuesta
+
+        return text
