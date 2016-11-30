@@ -8,13 +8,27 @@ import variables
 
 bot = variables.bot
 
-votacion = Votacion()
-
 while True:
     try:
         @bot.message_handler(commands=['help', 'start'])
         def send_welcome(message):
-            bot.reply_to(message, 'Welcome!!')
+            chat_id = message.chat.id
+            try:
+                name = message.from_user.first_name
+            except Exception as e:
+                print(e)
+                name = ''
+            text = '¡Bienvenido %s!\n' \
+                   'Agora US es un sistema de votación electronico que permite llevar el tradiccional' \
+                   ' método de votación actual a un sistema online de forma segura.\n\n' \
+                   'Este bot es una integración de dicho sistema y actualmente permite:\n' \
+                   '/getvotes - 📰 Obtiene los votos de una encuesta test\n' \
+                   '/votesi - 🔏 Vota SI en una encuesta test\n' \
+                   '/voteno - 🔏 Vota NO en una encuesta test\n' \
+                   '/votacion - 📝 Crea una votación' % name
+
+            bot.send_photo(chat_id, 'http://imgur.com/VesqBnN.png')
+            bot.reply_to(message, text)
 
 
         # EJEMPLO DE GET_VOTES
@@ -44,7 +58,8 @@ while True:
 
         @bot.message_handler(commands=['votacion'])
         def crear_votacion(message):
-            votacion.nombrar_votacion(message)
+            votacion_creator = Votacion()
+            votacion_creator.crear_votacion(message)
 
 
         bot.polling(none_stop=True)
