@@ -2,6 +2,7 @@
 
 import variables
 import telebot
+from telebot import types
 
 bot = variables.bot
 
@@ -85,6 +86,12 @@ class Votacion:
             self.añade_respuesta(respuesta)
             self.pide_respuesta(chat_id)
 
+    def mostrar_preguntas(self):
+        return sorted(self.preguntas_respuestas)
+
+    def mostrar_respuestas(self, pregunta):
+        return self.preguntas_respuestas[pregunta]
+
     def añade_pregunta(self, pregunta):
         num_preguntas = len(self.preguntas_respuestas)
         self.preguntas_respuestas['%d. %s' % (num_preguntas+1, pregunta)] = []
@@ -99,6 +106,16 @@ class Votacion:
     def get_num_respuestas(self):
         pregunta = sorted(self.preguntas_respuestas)[-1]
         return len(self.preguntas_respuestas[pregunta])
+
+    def enviar_pregunta(self, message):
+        chat_id = message.chat.id
+        preguntas = self.mostrar_preguntas()
+        pregunta = preguntas.pop()
+        respuestas = self.mostrar_respuestas(pregunta)
+        markup = types.InlineKeyboardMarkup()
+        for respuesta in respuestas:
+            markup.add(types.InlineKeyboardButton(respuesta, callback_data=respuesta))
+        bot.send_message(chat_id, pregunta, reply_markup=markup)
 
     def to_string(self):
         text = '*%s*\n\n' % self.titulo
