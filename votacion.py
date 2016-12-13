@@ -15,9 +15,11 @@ class Votacion:
         self.titulo = ""
         self.preguntas_respuestas = {}
         self.respuestas_seleccionadas = []
+        self.owner_id = 0
 
     def crear_votacion(self, message):
         self.pide_titulo(message.chat.id)
+        self.owner_id = message.from_user.id
 
     def pide_titulo(self, chat_id):
         msg = bot.send_message(chat_id, 'Dime un *título* para la votación:', parse_mode='Markdown')
@@ -49,7 +51,7 @@ class Votacion:
         if telebot.util.is_command(pregunta):
             command = telebot.util.extract_command(pregunta)
             if command == 'done' and self.get_num_preguntas() >= 1:
-                utils.almacenar_votacion(self.titulo, self.preguntas_respuestas)
+                utils.almacenar_votacion(self.titulo, self.owner_id, self.preguntas_respuestas)
                 bot.send_message(chat_id, '✅ Encuesta creada con éxito')
                 bot.send_message(chat_id, str(self.to_string()), parse_mode='Markdown')
                 # Prueba para comprobar que funciona el metodo de enviar pregunta

@@ -22,10 +22,10 @@ with con:
 
     #Borrar las tablas existentes
     cur.execute("DROP TABLE IF EXISTS Participacion")
-    cur.execute("DROP TABLE IF EXISTS Usuario")
     cur.execute("DROP TABLE IF EXISTS Respuesta")
     cur.execute("DROP TABLE IF EXISTS Pregunta")
     cur.execute("DROP TABLE IF EXISTS Votacion")
+    cur.execute("DROP TABLE IF EXISTS Usuario")
 
     #Crear tabla de Usuario
     cur.execute("CREATE TABLE Usuario(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Telegram_id INTEGER)")      #Aquí habrá que poner que la Telegram_id no puede ser nula

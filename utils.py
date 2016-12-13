@@ -4,7 +4,7 @@ import os
 import sqlite3 as lite
 
 class Utils:
-    def almacenar_votacion(self,titulo, preguntas_respuestas):
+    def almacenar_votacion(self,titulo, user_id, preguntas_respuestas):
         #Ruta donde se creará la base de datos. En sistemas UNIX-like será /home/username/votacion.db
         home = os.path.expanduser('~')
         path = home + '/votacion.db'
@@ -13,7 +13,7 @@ class Utils:
         with con:
             cur = con.cursor()
             #Activar el soporte de sqlite3 para claves foráneas
-            cur.execute("""INSERT INTO Votacion(Nombre) VALUES(?)""", (titulo,))
+            cur.execute("""INSERT INTO Votacion(Nombre, Id_Usuario) VALUES(?,?)""", (titulo, user_id))
             aux = cur.execute("""SELECT Votacion.id FROM Votacion WHERE Votacion.Nombre == ?""", (titulo,))
             for row in aux:
                 votacionId = row[0]
