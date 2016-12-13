@@ -4,6 +4,10 @@ import variables
 import telebot
 from telebot import types
 
+from utils import Utils
+
+utils = Utils()
+
 bot = variables.bot
 
 class Votacion:
@@ -44,6 +48,7 @@ class Votacion:
         if telebot.util.is_command(pregunta):
             command = telebot.util.extract_command(pregunta)
             if command == 'done' and self.get_num_preguntas() >= 1:
+                utils.almacenar_votacion(self.titulo, self.preguntas_respuestas)
                 bot.send_message(chat_id, '✅ Encuesta creada con éxito')
                 bot.send_message(chat_id, str(self.to_string()), parse_mode='Markdown')
             elif command == 'done':
