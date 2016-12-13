@@ -96,6 +96,15 @@ while True:
             except Exception as e:
                 bot.send_message(chat_id, 'Algo no fue bien')
 
+        @bot.message_handler(commands=['compartir'])
+        def compartir_votaciones(message):
+            user_id = message.from_user.id
+            votaciones = utils.get_votaciones(user_id)
+            markup = types.InlineKeyboardMarkup()
+            for votacion in votaciones:
+                markup.add(types.InlineKeyboardButton(votacion[0], switch_inline_query="compartir"))
+            bot.send_message(message.chat.id, "Mis votaciones", reply_markup=markup)
+
 
         bot.polling(none_stop=True)
 
