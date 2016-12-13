@@ -29,7 +29,9 @@ while True:
                    '/getvotes - 📰 Obtiene los votos de una encuesta test\n' \
                    '/votesi - 🔏 Vota SI en una encuesta test\n' \
                    '/voteno - 🔏 Vota NO en una encuesta test\n' \
-                   '/votacion - 📝 Crea una votación' % name
+                   '/votacion - 📝 Crea una votación\n' \
+                   '/misvotaciones - Muestra mis votaciones creadas\n' \
+                   '/compartir - Muestra panel para compartir votaciones' % name
 
             bot.send_photo(chat_id, 'http://imgur.com/VesqBnN.png')
             bot.reply_to(message, text)
