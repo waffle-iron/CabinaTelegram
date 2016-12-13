@@ -58,15 +58,20 @@ while True:
 
         @bot.message_handler(commands=['votacion'])
         def crear_votacion(message):
-            votacion_creator = Votacion()
-            votacion_creator.crear_votacion(message)
+            user_id = message.from_user.id
+            votacion = Votacion()
+            votacion.crear_votacion(message)
+            variables.sesion[user_id] = votacion
 
-            @bot.callback_query_handler(func=lambda call: True)
-            def responder(message):
-                votacion_creator.responder_pregunta(message)
+        @bot.callback_query_handler(func=lambda call: True)
+        def responder(message):
+            user_id = message.from_user.id
+            votacion = variables.sesion[user_id]
+            votacion.responder_pregunta(message)
 
 
         bot.polling(none_stop=True)
+
     except Exception as e:
         print('Error: %s\nReiniciando en 10 seg' % e)
         time.sleep(10)

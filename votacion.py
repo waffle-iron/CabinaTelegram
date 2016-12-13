@@ -117,16 +117,15 @@ class Votacion:
 
     def enviar_pregunta(self, chat_id):
         global msg_question_id, preguntas
-        preguntas = self.mostrar_preguntas()
-        print(preguntas)
+        if 'preguntas' not in globals():
+            preguntas = self.mostrar_preguntas()
+            preguntas.reverse()
         if len(preguntas) == 0:
             bot.edit_message_text('👍 Gracias por su participación', chat_id=chat_id, message_id=msg_question_id)
-            del msg_question_id
+            del msg_question_id, preguntas
             return False
-        preguntas.reverse()
         pregunta = preguntas.pop()
         respuestas = self.mostrar_respuestas(pregunta)
-        del self.preguntas_respuestas[pregunta]
         markup = types.InlineKeyboardMarkup()
         for respuesta in respuestas:
             markup.add(types.InlineKeyboardButton(respuesta, callback_data=respuesta))
