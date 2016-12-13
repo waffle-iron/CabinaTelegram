@@ -38,7 +38,8 @@ class Utils:
         with con:
             cur = con.cursor()
             cur.execute("PRAGMA foreign_keys = ON")
-            votacion = cur.execute("""SELECT Nombre FROM Votacion WHERE Id == ?""", (idVotacion,))
+            votacion = cur.execute("""SELECT Nombre FROM Votacion WHERE Id == ?""", (idVotacion,)).fetchone()[0]
+            user_id = cur.execute("""SELECT Id_Usuario FROM Votacion WHERE Id == ?""", (idVotacion,)).fetchone()[0]
             diccionario = {}
             preguntas = cur.execute("""SELECT Texto FROM Pregunta WHERE Id_votacion LIKE ?""", (idVotacion,))
             for row in preguntas:
@@ -54,4 +55,23 @@ class Utils:
                     respuestas.append(row[0])
 
             diccionario[nombrePregunta] = respuestas
-        return [votacion, diccionario]
+        return [votacion, user_id, diccionario, idVotacion]
+
+    def get_votaciones(self, user_id):
+        votaciones = []
+        try:
+            # Ruta donde se creará la base de datos. En sistemas UNIX-like será /home/username/votacion.db
+            home = os.path.expanduser('~')
+            path = home + '/votacion.db'
+            # Crea una conexión con la base de datos establecida en la ruta. Si no existe la base de datos, se creará una nueva
+            con = lite.connect(path)
+            with con:
+                cur = con.cursor()
+                id_votaciones = cur.execute("""SELECT Votacion.id FROM Votacion WHERE Votacion.Id_Usuario == ?""", (user_id,)).fetchall()
+            for id_votacion in id_votaciones:
+                votaciones.append(self.get_votacion(id_votacion[0]))
+            return votaciones
+
+
+        except Exception as e:
+            print(e)

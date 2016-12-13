@@ -2,11 +2,15 @@
 
 import time
 import requests
+from telebot import types
 
 from votacion import Votacion
+from utils import Utils
 import variables
 
 bot = variables.bot
+
+utils = Utils()
 
 while True:
     try:
@@ -68,6 +72,29 @@ while True:
             user_id = message.from_user.id
             votacion = variables.sesion[user_id]
             votacion.responder_pregunta(message)
+
+
+        @bot.message_handler(commands=['misvotaciones'])
+        def mis_votaciones(message):
+            user_id = message.from_user.id
+            votaciones = utils.get_votaciones(user_id)
+            text = '*Mis votaciones:*\n'
+            for votacion in votaciones:
+                text += '\n🔹 %s /votacion\_%d' % (votacion[0], votacion[3])
+            bot.reply_to(message, text, parse_mode='Markdown')
+
+        @bot.message_handler(regexp='^(/votacion_)\d+')
+        def info_votacion(message):
+            chat_id = message.chat.id
+            try:
+                votacion_id = message.text.split('_')[1]
+                votacion = utils.get_votacion(votacion_id)
+                if int(votacion[1]) != chat_id:
+                    bot.send_message(chat_id, 'No tienes permiso para ver esta votación')
+                else:
+                    bot.send_message(chat_id, votacion)
+            except Exception as e:
+                bot.send_message(chat_id, 'Algo no fue bien')
 
 
         bot.polling(none_stop=True)
