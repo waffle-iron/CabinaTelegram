@@ -31,7 +31,7 @@ with con:
     cur.execute("CREATE TABLE Usuario(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Telegram_id INTEGER)")      #Aquí habrá que poner que la Telegram_id no puede ser nula
 
     #Crear tabla de Votacion
-    cur.execute("CREATE TABLE Votacion(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Nombre TEXT NOT NULL)")
+    cur.execute("CREATE TABLE Votacion(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Nombre TEXT NOT NULL,Id_Usuario INTEGER NOT NULL,FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id))")
 
     #Crear tabla de Participación
     cur.execute("CREATE TABLE Participacion(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,Id_usuario INTEGER NOT NULL,Id_votacion INTEGER NOT NULL, FOREIGN KEY (Id_usuario) REFERENCES Usuario(Id), FOREIGN KEY (Id_votacion) REFERENCES Votacion(Id))")

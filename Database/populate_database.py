@@ -27,10 +27,10 @@ with con:
     cur.execute("INSERT INTO Usuario(Telegram_id) VALUES(250)")
 
     #Insertar datos en la tabla de Votacion
-    cur.execute("INSERT INTO Votacion(Nombre) VALUES('Votacion1')")
-    cur.execute("INSERT INTO Votacion(Nombre) VALUES('Votacion2')")
-    cur.execute("INSERT INTO Votacion(Nombre) VALUES('Votacion3')")
-    cur.execute("INSERT INTO Votacion(Nombre) VALUES('Votacion4')")
+    cur.execute("INSERT INTO Votacion(Nombre,Id_Usuario) VALUES('Votacion1',1)")
+    cur.execute("INSERT INTO Votacion(Nombre,Id_Usuario) VALUES('Votacion2',1)")
+    cur.execute("INSERT INTO Votacion(Nombre,Id_Usuario) VALUES('Votacion3',2)")
+    cur.execute("INSERT INTO Votacion(Nombre,Id_Usuario) VALUES('Votacion4',2)")
 
     #Insertar datos en la tabla de Participación
     cur.execute("INSERT INTO Participacion(Id_usuario,Id_votacion) VALUES(2,1)")
