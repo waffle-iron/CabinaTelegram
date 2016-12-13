@@ -14,6 +14,7 @@ class Votacion:
     def __init__(self):
         self.titulo = ""
         self.preguntas_respuestas = {}
+        self.respuestas_seleccionadas = []
 
     def crear_votacion(self, message):
         self.pide_titulo(message.chat.id)
@@ -51,6 +52,8 @@ class Votacion:
                 utils.almacenar_votacion(self.titulo, self.preguntas_respuestas)
                 bot.send_message(chat_id, '✅ Encuesta creada con éxito')
                 bot.send_message(chat_id, str(self.to_string()), parse_mode='Markdown')
+                # Prueba para comprobar que funciona el metodo de enviar pregunta
+                self.enviar_pregunta(chat_id)
             elif command == 'done':
                 bot.send_message(chat_id, 'Necesitas al menos una pregunta para crear la votación.')
                 self.pide_pregunta(chat_id)
@@ -112,15 +115,25 @@ class Votacion:
         pregunta = sorted(self.preguntas_respuestas)[-1]
         return len(self.preguntas_respuestas[pregunta])
 
-    def enviar_pregunta(self, message):
-        chat_id = message.chat.id
+    def enviar_pregunta(self, chat_id):
         preguntas = self.mostrar_preguntas()
+        if len(preguntas) == 0:
+            bot.send_message(chat_id, '👍 Gracias por si participación')
+            return False
+        preguntas.reverse()
         pregunta = preguntas.pop()
         respuestas = self.mostrar_respuestas(pregunta)
+        self.preguntas_respuestas.pop(pregunta, None)
         markup = types.InlineKeyboardMarkup()
         for respuesta in respuestas:
             markup.add(types.InlineKeyboardButton(respuesta, callback_data=respuesta))
         bot.send_message(chat_id, pregunta, reply_markup=markup)
+
+    def responder_pregunta(self, message):
+        chat_id = message.message.chat.id
+        respuesta = message.data
+        self.respuestas_seleccionadas.append(respuesta)
+        self.enviar_pregunta(chat_id)
 
     def to_string(self):
         text = '*%s*\n\n' % self.titulo

@@ -61,6 +61,10 @@ while True:
             votacion_creator = Votacion()
             votacion_creator.crear_votacion(message)
 
+            @bot.callback_query_handler(func=lambda call: True)
+            def responder(message):
+                votacion_creator.responder_pregunta(message)
+
 
         bot.polling(none_stop=True)
     except Exception as e:
