@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import pytest
-from telebot import types
 import time
 
+import pytest
+from telebot import types
+
+import variables
 from src.votacion import Votacion
-from src import variables
 
 bot = variables.bot
 

@@ -1,12 +1,13 @@
 # -*- encoding: utf-8 -*-
 
 import time
+
 import requests
 from telebot import types
+
+import variables
 from src.utils import Utils
 from src.votacion import Votacion
-
-from src import variables
 
 bot = variables.bot
 
@@ -16,7 +17,6 @@ while True:
     try:
         @bot.message_handler(commands=['help', 'start'])
         def send_welcome(message):
-            print(message.chat.id)
             chat_id = message.chat.id
             try:
                 name = message.from_user.first_name
