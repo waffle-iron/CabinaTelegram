@@ -2,8 +2,8 @@
 
 import telebot
 from telebot import types
-from src.utils import Utils
 
+from src.utils import Utils
 from src import variables
 
 utils = Utils()

@@ -1,0 +1,9 @@
+language: python
+python:
+    - "3.3"
+    - "3.4"
+    - "3.5"
+install: "pip install -r requirements.txt"
+script:
+    - echo -e "[Telegram]\ntoken_id = 302121523:AAGmqytGIB__0hdJEE9hHkltNosrbdzpSqU" > config.ini
+    - cd tests && py.test
