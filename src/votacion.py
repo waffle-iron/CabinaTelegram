@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-import variables
 import telebot
 from telebot import types
+from src.utils import Utils
 
-from utils import Utils
+from src import variables
 
 utils = Utils()
 
