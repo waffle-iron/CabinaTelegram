@@ -4,4 +4,4 @@ python:
 install: "pip install -r requirements.txt"
 script:
     - echo -e "[Telegram]\ntoken_id = 302121523:AAGmqytGIB__0hdJEE9hHkltNosrbdzpSqU" > config.ini
-    - cd tests && py.test
+    - py.test
