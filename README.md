@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/AgoraUS-G1-1617/CabinaTelegram.png?label=ready&title=Ready)](https://waffle.io/AgoraUS-G1-1617/CabinaTelegram)
 #EGC-CabinaTelegram-16-17
 
 ![alt Banner](http://imgur.com/VesqBnN.png)
